@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scholar Database ERD</title>
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+            gap: 20px;
+            position: relative;
+        }
+        .entity {
+            border: 2px solid #333;
+            padding: 10px;
+            margin: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            min-width: 250px;
+            position: relative;
+        }
+        .relationship-line {
+            position: absolute;
+            border: 2px solid #666;
+            z-index: -1;
+        }
+        .connector {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+        }
+        .connector-one {
+            border-left: 2px solid #666;
+            border-bottom: 2px solid #666;
+        }
+        .connector-many {
+            border: 2px solid #666;
+            border-radius: 50%;
+        }
+        .relationship {
+            border-top: 1px solid #666;
+            padding: 5px;
+        }
+        .attribute {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        .primary-key {
+            font-weight: bold;
+            color: #c74343;
+        }
+        .foreign-key {
+            color: #2d3436;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Relationship lines -->
+        <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;">
+            <!-- Users to Scholarship_Applications -->
+            <line x1="20%" y1="30%" x2="40%" y2="30%" stroke="#666" stroke-width="2"/>
+            <circle cx="40%" cy="30%" r="5" fill="none" stroke="#666" stroke-width="2"/>
+            
+            <!-- Scholarship to Daily_Scholarship -->
+            <line x1="40%" y1="50%" x2="60%" y2="50%" stroke="#666" stroke-width="2"/>
+            <circle cx="60%" cy="50%" r="5" fill="none" stroke="#666" stroke-width="2"/>
+            
+            <!-- Semester to Scholarship -->
+            <line x1="20%" y1="70%" x2="40%" y2="70%" stroke="#666" stroke-width="2"/>
+            <circle cx="20%" cy="70%" r="5" fill="none" stroke="#666" stroke-width="2"/>
+            
+            <!-- Add more relationship lines as needed -->
+        </svg>
+        
+        <div class="entity">
+            <h3>Users</h3>
+            <div class="attribute primary-key">userID (PK)</div>
+            <div class="attribute">studentID</div>
+            <div class="attribute">profile</div>
+            <div class="attribute">cor</div>
+            <div class="attribute">first_name</div>
+            <div class="attribute">last_name</div>
+            <div class="attribute">address</div>
+            <div class="attribute">contact</div>
+            <div class="attribute">email</div>
+            <div class="attribute">password</div>
+            <div class="attribute">roles</div>
+        </div>
+
+        <div class="entity">
+            <h3>Scholarship</h3>
+            <div class="attribute primary-key">scholarshipID (PK)</div>
+            <div class="attribute foreign-key">semesterID (FK)</div>
+            <div class="attribute">name</div>
+            <div class="attribute">date_start</div>
+            <div class="attribute">date_end</div>
+            <div class="attribute">description</div>
+            <div class="attribute">scholarID</div>
+            <div class="attribute">limitation</div>
+            <div class="attribute">sector</div>
+        </div>
+
+        <div class="entity">
+            <h3>Daily_Scholarship</h3>
+            <div class="attribute primary-key">dailyscholarshipID (PK)</div>
+            <div class="attribute foreign-key">scholarshipID (FK)</div>
+            <div class="attribute">sectioned_date</div>
+            <div class="attribute">limit_counter</div>
+            <div class="attribute">full_status</div>
+            <div class="attribute">limits</div>
+        </div>
+
+        <div class="entity">
+            <h3>Scholarship_Applications</h3>
+            <div class="attribute primary-key">applicationsID (PK)</div>
+            <div class="attribute foreign-key">userID (FK)</div>
+            <div class="attribute foreign-key">dailyscholarshipID (FK)</div>
+            <div class="attribute">date_apply</div>
+            <div class="attribute">application_status</div>
+            <div class="attribute">scholarship_refences</div>
+            <div class="attribute">denial_feedback</div>
+        </div>
+
+        <div class="entity">
+            <h3>Semester</h3>
+            <div class="attribute primary-key">semesterID (PK)</div>
+            <div class="attribute">sememestrName</div>
+            <div class="attribute">date_start</div>
+            <div class="attribute">date_end</div>
+            <div class="attribute">flag</div>
+        </div>
+
+        <div class="entity">
+            <h3>Scholarship_Docs</h3>
+            <div class="attribute primary-key">docsID (PK)</div>
+            <div class="attribute foreign-key">scholarship (FK)</div>
+            <div class="attribute">document_name</div>
+            <div class="attribute">document</div>
+        </div>
+
+        <div class="entity">
+            <h3>ScholarshipApplications_Docs</h3>
+            <div class="attribute primary-key">socdocsID (PK)</div>
+            <div class="attribute foreign-key">applicationsID (FK)</div>
+            <div class="attribute">document_name</div>
+            <div class="attribute">document_file</div>
+        </div>
+
+        <div class="entity">
+            <h3>Scholarship_Stipends</h3>
+            <div class="attribute primary-key">stipend_id (PK)</div>
+            <div class="attribute foreign-key">scholarship_id (FK)</div>
+            <div class="attribute">release_date</div>
+            <div class="attribute">release_venue</div>
+            <div class="attribute">amount</div>
+            <div class="attribute">status</div>
+        </div>
+
+        <div class="entity">
+            <h3>Buletin</h3>
+            <div class="attribute primary-key">buletID (PK)</div>
+            <div class="attribute">descriptions</div>
+            <div class="attribute">type</div>
+            <div class="attribute">visiblity</div>
+            <div class="attribute">date_created</div>
+        </div>
+
+        <div class="entity">
+            <h3>Publications</h3>
+            <div class="attribute primary-key">pubID (PK)</div>
+            <div class="attribute">banner</div>
+            <div class="attribute">titles</div>
+            <div class="attribute">description</div>
+        </div>
+
+        <div class="entity">
+            <h3>Settings</h3>
+            <div class="attribute primary-key">settingsID (PK)</div>
+            <div class="attribute">Logo</div>
+            <div class="attribute">Name</div>
+            <div class="attribute">email</div>
+            <div class="attribute">contact</div>
+            <div class="attribute">address</div>
+            <div class="attribute">color</div>
+            <div class="attribute">description</div>
+        </div>
+    </div>
+</body>
+</html>
